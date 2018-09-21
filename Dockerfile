@@ -1,4 +1,4 @@
-FROM dhpcontainreg.azurecr.io/core-image/python:3.7-alpine3.7
+FROM dhpcontainreg.azurecr.io/core-image/python:3.6
 RUN git clone https://github.com/dhpgitub/k8s-service-watcher.git
 WORKDIR k8s-service-watcher
 RUN ls -alFrt
