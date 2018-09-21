@@ -1,27 +1,23 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: ms-name-normalization
+  name: k8s-service-watcher
   labels:
-    app: ms-name-normalization
+    app: service-watcher
   namespace: default
 #    registerWithMesh: true
 
 spec:
   selector:
     matchLabels:
-      app: ms-name-normalization
+      app: k8s-service-watcher
   template:
     metadata:
       labels:
-        app: ms-name-normalization
+        app: k8s-service-watcher
     spec:
       containers:
-      - name: ms-name-normalization
-        image: dhpcontainreg.azurecr.io/dhpcore-utility/pynamenormalization:v1
+      - name: k8s-service-watcher
+        image: dhpcontainreg.azurecr.io/core-app/k8s-service-watcher:v1
         imagePullPolicy: Always
-        ports:
-          - containerPort: 5000
-        command: ["python"]
-        args: ["app.py", "-Xapp_name=ms-name-normalization", "-XZipkinURL=http://40.122.105.94:9411/api/v1/spans"]
       restartPolicy: Always
