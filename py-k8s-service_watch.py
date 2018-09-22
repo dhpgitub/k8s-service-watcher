@@ -12,7 +12,7 @@ import logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(threadName)s - %(levelname)s - %(message)s')
 
 # set the Consul agent URL and other variables
-consul_url = "http://servicemesh-consul"
+consul_url = "http://servicemesh-consul:8500"
 datacenter = "dev"
 
 control_plane_host = "servicemesh-consul"
