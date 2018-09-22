@@ -12,11 +12,11 @@ import logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(threadName)s - %(levelname)s - %(message)s')
 
 # set the Consul agent URL and other variables
-consul_url = "http://40.113.218.45:8500"
+consul_url = "http://servicemesh-consul"
 datacenter = "dev"
 
-control_plane_host = "40.113.218.45"
-control_plane_ip = "40.113.218.45"
+control_plane_host = "servicemesh-consul"
+control_plane_ip = "servicemesh-consul"
 
 def main(k8s_context=None):
     # setup the namespace
