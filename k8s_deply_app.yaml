@@ -21,3 +21,12 @@ spec:
         image: dhpcontainreg.azurecr.io/core-app/k8s-service-watcher:v1
         imagePullPolicy: Always
       restartPolicy: Always
+      volumeMounts:
+      - name: kubeconfig
+        mountPath: "/k8s-service-watcher"
+        readOnly: true
+     
+     volumes:
+     - name: kubeconfig
+       secret: 
+         secretName: k8s-servicewatch-servicemesh-conf
