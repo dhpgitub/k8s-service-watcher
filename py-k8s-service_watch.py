@@ -80,13 +80,13 @@ def notify_consul(service, action, labels):
                 full_consul_url = consul_url + "/v1/agent/service/register"
                 # determine which port to use depending on the service port type
                 if service.spec.type == "NodePort":
-                    final_host = service.metadata.name
-                    final_address = service.metadata.name
+                    final_host = service.metadata.name + "." + service.metadata.namespace
+                    final_address = service.metadata.name + "." + service.metadata.namespace
                 # final_port = port.node_port
                     final_port = port.port
                 if service.spec.type == "ClusterIP":
-                    final_host = service.spec.cluster_ip
-                    final_address = service.spec.cluster_ip
+                    final_host = service.spec.cluster_ip + "." + service.metadata.namespace
+                    final_address = service.spec.cluster_ip + "." + service.metadata.namespace
                     final_port = port.port
                 if service.spec.type == "LoadBalancer":
                     final_host = service.status.load_balancer.ingress[0].ip
