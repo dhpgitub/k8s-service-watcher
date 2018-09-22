@@ -17,7 +17,7 @@ datacenter = "dev"
 
 control_plane_host = "servicemesh-consul"
 control_plane_ip = "servicemesh-consul"
-
+kube_Config_File = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'k8s-config', 'k8s-servicewatch-servicemesh-conf'))
 def main(k8s_context=None):
     # setup the namespace
     ns = os.getenv("K8S_NAMESPACE")
@@ -25,7 +25,7 @@ def main(k8s_context=None):
         ns = ""
 
     # configure client
-    config.load_kube_config(config_file='k8s-servicewatch-servicemesh-conf')
+    config.load_kube_config(config_file=kube_Config_File)
     api = client.CoreV1Api()
 
     # Setup new watch
