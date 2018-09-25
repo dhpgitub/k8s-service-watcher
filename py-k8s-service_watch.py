@@ -94,7 +94,7 @@ def notify_consul(service, action, labels):
                     final_port = port.port
 
                 consul_json = {
-                    "ID": service.metadata.name,
+                    "ID": full_name,
                     "Name": full_name,
                     "Tags": [service.metadata.namespace],
                     "Address": final_address,
@@ -121,7 +121,7 @@ def notify_consul(service, action, labels):
                     final_address = service.status.load_balancer.ingress[0].ip
                     final_port = port.port
                 consul_json = {
-                    "ID": service.metadata.name,
+                    "ID": full_name,
                     "Name": full_name,
                     "Tags": [service.metadata.namespace],
                     "Address": final_address,
@@ -144,7 +144,7 @@ def notify_consul(service, action, labels):
 
             if action == 'DELETED':
                 # if action == 'ADDED':
-                serviceID = service.metadata.name
+                serviceID = full_name
                 logging.info(f"Deregistering {serviceID}")
                 full_consul_url = consul_url + "/v1/agent/service/deregister/" + serviceID
                 # assemble the Consul API payload
