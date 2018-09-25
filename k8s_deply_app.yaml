@@ -22,7 +22,7 @@ spec:
         imagePullPolicy: Always
         volumeMounts:
         - name: kubeconfig
-          mountPath: "/k8s-service-watcher"
+          mountPath: "/k8s-config"
           readOnly: true
       restartPolicy: Always
 
