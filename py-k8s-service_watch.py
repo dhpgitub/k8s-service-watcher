@@ -59,7 +59,7 @@ def main(k8s_context=None):
             else:
                 logging.info(f"external ip is null: {ext_ip}")
         else:
-            pass
+            logging.info(f"watch stream for new events")
 
 # Notify the Consul agent
 def notify_consul(service, action, labels):
