@@ -50,19 +50,14 @@ def main(k8s_context=None):
         except TypeError as err:
             logging.info("External IP not set for LoadBalancer service")
             ext_ip = None
-        logging.info(f"data type of ip is {type(ext_ip)}")
-        if register_flag == True and svc.spec.type in ("NodePort", "ClusterIP"):
-            logging.info("in NP & CP")
+        if register_flag == True and svc.spec.type in ("NodePort", "ClusterIP"):         
             notify_consul(svc, item['type'], labels)
         elif register_flag == True and svc.spec.type in ("LoadBalancer"):
             if not (ext_ip is None):
-                logging.info("in LB")
                 logging.info(f"external ip is not null: {ext_ip}")
                 notify_consul(svc, item['type'], labels)
             else:
-                logging.info("in LB")
                 logging.info(f"external ip is null: {ext_ip}")
-                # notify_consul(svc, item['type'])
         else:
             pass
 
@@ -99,11 +94,8 @@ def notify_consul(service, action, labels):
                     "Tags": [service.metadata.namespace],
                     "Address": final_address,
                     "Port": final_port,
-                    # "Meta": {
-                    #     "redis_version": "4.0"},
                     "EnableTagOverride": False,
                     "Check": {"DeregisterCriticalServiceAfter": "90m",
-                              # "Args": ["/usr/local/bin/check_redis.py"],
                               "HTTP": f"http://{final_address}:{final_port}/{ 'actuator/' if labels.get('framework',None) == 'spring_boot' else ''}health",
                               "Interval": "90s"
                               }
@@ -111,9 +103,9 @@ def notify_consul(service, action, labels):
                 logging.info(f"request {full_consul_url} {consul_json}")
                 html_headers = {"Content-Type": "application/json", "Accept": "application/json"}
                 response = requests.put(full_consul_url, json=consul_json, headers=html_headers)
+                logging.info(response.status_code)
                 if response.status_code != 200:
                     logging.info(f"Status: {response.status_code} Headers: {response.headers} Response content: {response.text}")
-
             if action == "MODIFIED":
                 logging.info(f"Registering new modified {full_name}")
                 if service.spec.type == "LoadBalancer":
@@ -126,11 +118,8 @@ def notify_consul(service, action, labels):
                     "Tags": [service.metadata.namespace],
                     "Address": final_address,
                     "Port": final_port,
-                    # "Meta": {
-                    #     "redis_version": "4.0"},
                     "EnableTagOverride": False,
                     "Check": {"DeregisterCriticalServiceAfter": "90m",
-                              # "Args": ["/usr/local/bin/check_redis.py"],
                               "HTTP": f"http://{final_address}:{final_port}/health",
                               "Interval": "90s"
                               }
@@ -138,6 +127,7 @@ def notify_consul(service, action, labels):
                 logging.info(f"request {full_consul_url} {consul_json}")
                 html_headers = {"Content-Type": "application/json", "Accept": "application/json"}
                 response = requests.put(full_consul_url, json=consul_json, headers=html_headers)
+                logging.info(response.status_code)
                 if response.status_code != 200:
                     logging.info(
                         f"Status: {response.status_code} Headers: {response.headers} Response content: {response.text}")
