@@ -150,5 +150,7 @@ def notify_consul(service, action, labels):
 
 if __name__ == '__main__':
     while True:
-        # main(k8s_context='Surfers2Cluster')
+        logging.info("starting service watcher")
         main()
+        logging.info("service watcher stream timed-out and restarting new watchstream")
+        
