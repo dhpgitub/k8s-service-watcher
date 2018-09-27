@@ -32,7 +32,7 @@ def main(k8s_context=None):
     # Setup new watch
     w = watch.Watch()
     logging.info(f"Watching for Kubernetes services for all namespaces")
-    for item in w.stream(api.list_service_for_all_namespaces, timeout_seconds=0):
+    for item in w.stream(api.list_service_for_all_namespaces, timeout_seconds=600):
         svc = item['object']
         # get the metadata labels
         labels = svc.metadata.labels
