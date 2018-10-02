@@ -2,7 +2,7 @@ import requests, logging, time, os
 from kubernetes import client, config, watch
 from consul_reg_payload import Consul_payload
 
-wait_time = os.environ.get("wait_time",60)
+wait_time = int(os.environ.get("wait_time",60))
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(threadName)s - %(levelname)s - %(message)s')
 # set the Consul agent URL and other variables
 consul_url = "http://servicemesh-consul:8500"
