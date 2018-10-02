@@ -32,8 +32,8 @@ spec:
           mountPath: "/k8s-config"
           readOnly: true
         env:
-          - name: wait_time
-            value: 60
+        - name: wait_time
+          value: "60"
       restartPolicy: Always
 
       volumes:
