@@ -6,4 +6,4 @@ WORKDIR k8s-service-watcher
 RUN ls -alFrt
 RUN pip install -r requirements.txt
 ENTRYPOINT ["python"]
-CMD ["py-k8s-service_watch.py"]
+CMD ["py-k8s-endpoints_watch.py"]
