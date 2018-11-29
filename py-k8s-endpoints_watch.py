@@ -54,7 +54,7 @@ def main():
                     payload.Tags = tags
                     payload.setCheck(health=f"{ 'actuator/' if labels.get('framework',None) == 'spring_boot' else ''}health")
                     html_headers = {"Content-Type": "application/json", "Accept": "application/json"}
-                    response = requests.put(url="http://23.99.255.199:8500/v1/agent/service/register", json=payload.__dict__, headers=html_headers)
+                    response = requests.put(url=consul_url + "/v1/agent/service/register", json=payload.__dict__, headers=html_headers)
                     logging.info(f"{'Skipping service ' + full_name + ' error from Consul' if response.status_code!=200 else 'Registered service '+ full_name}")
 
     # Deregister all services from Consul that are not running in k8s
