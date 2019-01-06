@@ -8,6 +8,7 @@ metadata:
 #    registerWithMesh: true
 
 spec:
+  serviceAccountName: servicewatch
   selector:
     matchLabels:
       app: k8s-service-watcher
@@ -18,7 +19,7 @@ spec:
     spec:
       containers:
       - name: k8s-service-watcher
-        image: dhpcontainreg.azurecr.io/core-app/k8s-service-watcher:v1
+        image: dhpcontainreg.azurecr.io/core-app/k8s-service-watcher:v2
         imagePullPolicy: Always
         resources:
           requests:
@@ -27,16 +28,3 @@ spec:
           limits:
             memory: "128Mi"
             cpu: "500m"
-        volumeMounts:
-        - name: kubeconfig
-          mountPath: "/k8s-config"
-          readOnly: true
-        env:
-        - name: wait_time
-          value: "60"
-      restartPolicy: Always
-
-      volumes:
-      - name: kubeconfig
-        secret:
-          secretName: k8s-servicewatch-servicemesh-conf

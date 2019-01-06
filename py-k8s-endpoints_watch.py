@@ -10,9 +10,6 @@ datacenter = "dev"
 
 control_plane_host = "servicemesh-consul"
 control_plane_ip = "servicemesh-consul"
-kube_Config_File = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), '..', 'k8s-config', 'k8s-servicewatch-servicemesh-conf'))
-
 
 def consul_get_all_svc(consul_host = None):
     logging.info("Retrieving list of all registered services")
@@ -27,7 +24,7 @@ def consul_get_all_svc(consul_host = None):
 
 def main():
     consul_svcs = consul_get_all_svc(consul_host=consul_url).get('services')
-    config.load_kube_config(config_file=kube_Config_File)
+    config.load_incluster_config()
     api = client.CoreV1Api()
     all_endpoints = api.list_endpoints_for_all_namespaces().items
     payload = Consul_payload(Name='default-ms-name-normalization-all-ops')
