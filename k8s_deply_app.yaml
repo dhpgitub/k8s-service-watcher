@@ -8,7 +8,6 @@ metadata:
 #    registerWithMesh: true
 
 spec:
-  serviceAccountName: servicewatch
   selector:
     matchLabels:
       app: k8s-service-watcher
@@ -17,6 +16,8 @@ spec:
       labels:
         app: k8s-service-watcher
     spec:
+      serviceAccountName: servicewatch
+      automountServiceAccountToken: true
       containers:
       - name: k8s-service-watcher
         image: dhpcontainreg.azurecr.io/core-app/k8s-service-watcher:v2
